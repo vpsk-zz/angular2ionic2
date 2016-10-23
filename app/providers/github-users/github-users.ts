@@ -66,4 +66,21 @@ export class GithubUsers {
         });
     });
   }
+
+  // Search for github repo
+  searchRepos() {
+    // get the data from the api and return it as a promise
+    return new Promise<Array<User>>(resolve => {
+      // Change the url to match https://api.github.com/search/users?q={searchParam}
+      this.http.get(`https://api.github.com/search/repositories?q=stars:>=0`)
+        // Cast the result into an array of users. 
+        // The returned json result has an items
+        // property which contains the users
+        .map(res =>(res.json().items))
+        .subscribe(users => {
+          console.log(users);
+          resolve(users);
+        });
+    });
+  }
 }
